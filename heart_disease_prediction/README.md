@@ -45,7 +45,7 @@ Model performance is rigorously evaluated using a comprehensive set of metrics e
 * **SHapley Additive exPlanations (SHAP):** Used to provide both global (overall feature impact) and local (individual prediction) explanations for the best-performing model(s).
 
 ## 4. Repository Structure
-
+'''text
 .
 ├── data/
 │   ├── raw/                # Original, immutable dataset
@@ -60,7 +60,7 @@ Model performance is rigorously evaluated using a comprehensive set of metrics e
 ├── artifacts/              # Stores trained models and hyperparameter search results
 ├── requirements.txt        # Project dependencies
 └── README.md               # Project overview and documentation (This file)
-
+'''
 
 ## 5. Getting Started
 
