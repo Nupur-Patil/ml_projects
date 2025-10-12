@@ -46,21 +46,22 @@ Model performance is rigorously evaluated using a comprehensive set of metrics e
 
 ## 4. Repository Structure
 
+```text
 .
-├── data/
-│   ├── raw/                # Original, immutable dataset
-│   └── processed/          # Cleaned, preprocessed data for modeling
-├── notebooks/
-│   ├── 01_eda_and_cleaning.ipynb # Initial exploration and preprocessing steps
-│   └── 02_model_training_and_tuning.ipynb # Model comparison, tuning, and evaluation
-├── src/
-│   ├── pipeline.py         # Defines the data processing and model pipelines
-│   ├── models.py           # Contains model definitions and training logic
-│   └── utils.py            # Helper functions (e.g., plotting metrics)
-├── artifacts/              # Stores trained models and hyperparameter search results
-├── requirements.txt        # Project dependencies
-└── README.md               # Project overview and documentation (This file)
-
+|-- data/
+|   |-- raw/                    # Original, immutable dataset
+|   |-- processed/              # Cleaned, preprocessed data for modeling
+|-- notebooks/
+|   |-- 01_eda_and_cleaning.ipynb # Initial exploration and preprocessing steps
+|   |-- 02_model_training_and_tuning.ipynb # Model comparison, tuning, and evaluation
+|-- src/
+|   |-- pipeline.py             # Defines the data processing and model pipelines
+|   |-- models.py               # Contains model definitions and training logic
+|   |-- utils.py                # Helper functions (e.g., plotting metrics)
+|-- artifacts/                  # Stores trained models and hyperparameter search results
+|-- requirements.txt            # Project dependencies
+`-- README.md                   # Project overview and documentation (This file)
+```
 
 ## 5. Getting Started
 
