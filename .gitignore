@@ -7,7 +7,13 @@ data/processed/*
 !data/raw/.gitkeep      
 !data/processed/.gitkeep 
 
+heart_disease_prediction/data/raw/*
+heart_disease_prediction/data/processed/*
+!heart_disease_prediction/data/raw/.gitkeep      
+!heart_disease_prediction/data/processed/.gitkeep 
+
 # ------------------------------------
 # 2. Python Environment
 # ------------------------------------
 .ipynb_checkpoints/ 
+
