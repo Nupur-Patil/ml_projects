@@ -1,0 +1,13 @@
+# ------------------------------------
+# 1. Data
+# ------------------------------------
+# Data (since files are too large)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep      
+!data/processed/.gitkeep 
+
+# ------------------------------------
+# 2. Python Environment
+# ------------------------------------
+.ipynb_checkpoints/ 
