@@ -3,6 +3,18 @@ import pandas as pd
 import numpy as np
 import os
 
+from sklearn.model_selection import train_test_split
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+
+TARGET_COLUMN = 'num'
+NUMERICAL_FEATURES = ['age', 'trestbps', 'chol', 'thalch', 'oldpeak']
+BINARY_FEATURES = ['sex', 'fbs', 'exang']
+OHE_FEATURES = ['cp', 'restecg', 'slope', 'ca', 'thal']
+FEATURES = NUMERICAL_FEATURES + BINARY_FEATURES + OHE_FEATURES
+
 def load_data(file_path):
     """Loads data from a CSV file."""
     try:
@@ -31,16 +43,57 @@ def impute_categoricals(df):
         df[col] = df.groupby(['sex'])[col].transform(impute_group_mode)
     return df
 
-def encode_categoricals(df):
-    """Loads data from a CSV file."""
     
-def get_processed_data(df, test_size=0.2, random_state=42):
+def create_preprocessing_pipeline():
+    """
+    Creates the scikit-learn ColumnTransformer for all data preprocessing steps.
+    
+    Includes KNNImputer for numerical features, OneHot Encoding for categorical features 
+    and StandardScaler.
+    """
+    # 1. Handle binary features by replacing values with 1/0
+    df['sex'] = np.where(df['sex'] == 'Male', 1, 0)
+    df['fbs'] = np.where(df['fbs'] == True, 1, 0)
+    df['exang'] = np.where(df['exang'] == True, 1, 0)
+    
+    # 2. Numerical Pipeline: Impute missing values then scale
+    numerical_transformer = Pipeline(steps=[
+        # Use KNNImputer to fill NaNs, converting to array to avoid feature name warning
+        ('imputer', KNNImputer(n_neighbors=5)), 
+        # Standardize features (mean=0, variance=1)
+        ('scaler', StandardScaler()) 
+    ])
+    
+    # 3. Categorical Pipeline: One-Hot Encode categorical features
+    categorical_transformer = Pipeline(steps=[
+        # Handle 'unknown' categories and ensure consistent column names
+        ('onehot', OneHotEncoder(handle_unknown='ignore')) 
+    ])
+    
+    # 3. Column Transformer: Apply pipelines to the correct columns
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numerical_transformer, NUMERICAL_FEATURES),
+            ('cat', categorical_transformer, OHE_FEATURES)
+        ],
+        remainder='passthrough',  # Keep any other columns if they exist
+        n_jobs=-1
+    )
+    
+    return preprocessor
+    
+def get_processed_data(df, test_size=0.25, random_state=42):
     """
     Splits data and applies the preprocessing pipeline structure.
     Returns: X_train, X_test, y_train, y_test, preprocessor
     """
+    X = df[FEATURES]
+    y = df[TARGET_COLUMN]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
     
+    preprocessor = create_preprocessing_pipeline()
     
+    return X_train, X_test, y_train, y_test, preprocessor
 if __name__ == '__main__':
     # This block runs if you execute this file directly
     path_to_dataset = r'C:\\Users\\patil\\Documents\\GitHub\\ml_projects\\heart_disease_prediction\\data\\raw\datasets\redwankarimsony\heart-disease-data\versions\6'
@@ -56,3 +109,10 @@ if __name__ == '__main__':
         imputed_df = impute_categoricals(df)
     except:
         print('Imputation error')
+        
+    X_train, X_test, y_train, y_test, preprocessor = get_processed_data(df)
+    
+    print("\n--- Data Processor Check ---")
+    print(f"Training set size: {X_train.shape[0]} samples")
+    print(f"Test set size: {X_test.shape[0]} samples")
+    print("\nPreprocessing Pipeline created successfully.")
