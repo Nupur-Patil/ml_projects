@@ -94,6 +94,16 @@ def get_processed_data(df, test_size=0.25, random_state=42):
     preprocessor = create_preprocessing_pipeline()
     
     return X_train, X_test, y_train, y_test, preprocessor
+
+def save_data(df,file_path):
+    """Saves preprocessed data to a CSV file."""
+    try:
+        df.to_csv(file_path)
+        # Ensure all necessary columns are present, handling potential missing columns later
+        return None
+    except FileNotFoundError:
+        print(f"Error in saving file at {file_path}")
+        return None
 if __name__ == '__main__':
     # This block runs if you execute this file directly
     path_to_dataset = r'C:\\Users\\patil\\Documents\\GitHub\\ml_projects\\heart_disease_prediction\\data\\raw\datasets\redwankarimsony\heart-disease-data\versions\6'
@@ -111,6 +121,11 @@ if __name__ == '__main__':
         print('Imputation error')
         
     X_train, X_test, y_train, y_test, preprocessor = get_processed_data(df)
+    
+    folder_path = r'C:\\Users\\patil\\Documents\\GitHub\\ml_projects\\heart_disease_prediction\\data\\processed'
+    filename = 'processed_data_py.csv'
+    full_file_path = os.path.join(folder_path, filename)
+    save_data(df,full_file_path)
     
     print("\n--- Data Processor Check ---")
     print(f"Training set size: {X_train.shape[0]} samples")
