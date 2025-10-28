@@ -9,10 +9,10 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
-TARGET_COLUMN = 'num'
-NUMERICAL_FEATURES = ['age', 'trestbps', 'chol', 'thalch', 'oldpeak']
+TARGET_COLUMN = ['num']
+NUMERICAL_FEATURES = ['age', 'trestbps', 'chol', 'thalch', 'oldpeak', 'ca']
 BINARY_FEATURES = ['sex', 'fbs', 'exang']
-OHE_FEATURES = ['cp', 'restecg', 'slope', 'ca', 'thal']
+OHE_FEATURES = ['cp', 'restecg', 'slope', 'thal']
 FEATURES = NUMERICAL_FEATURES + BINARY_FEATURES + OHE_FEATURES
 
 def load_data(file_path):
@@ -98,7 +98,8 @@ def get_processed_data(df, test_size=0.25, random_state=42):
 def save_data(df,file_path):
     """Saves preprocessed data to a CSV file."""
     try:
-        df.to_csv(file_path)
+        df = df[FEATURES + TARGET_COLUMN]
+        df.to_csv(file_path, index=False)
         # Ensure all necessary columns are present, handling potential missing columns later
         return None
     except FileNotFoundError:
@@ -128,6 +129,6 @@ if __name__ == '__main__':
     save_data(df,full_file_path)
     
     print("\n--- Data Processor Check ---")
-    print(f"Training set size: {X_train.shape[0]} samples")
-    print(f"Test set size: {X_test.shape[0]} samples")
+    print(f"Training set size: {X_train.shape[0]} samples {X_train.shape[1]} columns")
+    print(f"Test set size: {X_test.shape[0]} samples {X_test.shape[1]} columns")
     print("\nPreprocessing Pipeline created successfully.")
