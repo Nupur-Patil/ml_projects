@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
-TARGET_COLUMN = ['num']
+TARGET_COLUMN = 'num'
 NUMERICAL_FEATURES = ['age', 'trestbps', 'chol', 'thalch', 'oldpeak', 'ca']
 BINARY_FEATURES = ['sex', 'fbs', 'exang']
 OHE_FEATURES = ['cp', 'restecg', 'slope', 'thal']
@@ -51,12 +51,8 @@ def create_preprocessing_pipeline():
     Includes KNNImputer for numerical features, OneHot Encoding for categorical features 
     and StandardScaler.
     """
-    # 1. Handle binary features by replacing values with 1/0
-    df['sex'] = np.where(df['sex'] == 'Male', 1, 0)
-    df['fbs'] = np.where(df['fbs'] == True, 1, 0)
-    df['exang'] = np.where(df['exang'] == True, 1, 0)
     
-    # 2. Numerical Pipeline: Impute missing values then scale
+    # 1. Numerical Pipeline: Impute missing values then scale
     numerical_transformer = Pipeline(steps=[
         # Use KNNImputer to fill NaNs, converting to array to avoid feature name warning
         ('imputer', KNNImputer(n_neighbors=5)), 
@@ -64,7 +60,7 @@ def create_preprocessing_pipeline():
         ('scaler', StandardScaler()) 
     ])
     
-    # 3. Categorical Pipeline: One-Hot Encode categorical features
+    # 2. Categorical Pipeline: One-Hot Encode categorical features
     categorical_transformer = Pipeline(steps=[
         # Handle 'unknown' categories and ensure consistent column names
         ('onehot', OneHotEncoder(handle_unknown='ignore')) 
@@ -87,6 +83,15 @@ def get_processed_data(df, test_size=0.25, random_state=42):
     Splits data and applies the preprocessing pipeline structure.
     Returns: X_train, X_test, y_train, y_test, preprocessor
     """
+    try:
+        imputed_df = impute_categoricals(df)
+    except:
+        print('Imputation error')
+    # 1. Handle binary features by replacing values with 1/0
+    df['sex'] = np.where(df['sex'] == 'Male', 1, 0)
+    df['fbs'] = np.where(df['fbs'] == True, 1, 0)
+    df['exang'] = np.where(df['exang'] == True, 1, 0)
+    
     X = df[FEATURES]
     y = df[TARGET_COLUMN]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
@@ -98,7 +103,8 @@ def get_processed_data(df, test_size=0.25, random_state=42):
 def save_data(df,file_path):
     """Saves preprocessed data to a CSV file."""
     try:
-        df = df[FEATURES + TARGET_COLUMN]
+        col = FEATURES + [TARGET_COLUMN]
+        df = df[col]
         df.to_csv(file_path, index=False)
         # Ensure all necessary columns are present, handling potential missing columns later
         return None
@@ -116,11 +122,7 @@ if __name__ == '__main__':
         print(f'Error reading file')
     else:
         print('Data imported')
-    try:
-        imputed_df = impute_categoricals(df)
-    except:
-        print('Imputation error')
-        
+    
     X_train, X_test, y_train, y_test, preprocessor = get_processed_data(df)
     
     folder_path = r'C:\\Users\\patil\\Documents\\GitHub\\ml_projects\\heart_disease_prediction\\data\\processed'
