@@ -91,7 +91,8 @@ def get_processed_data(df, test_size=0.25, random_state=42):
     df['sex'] = np.where(df['sex'] == 'Male', 1, 0)
     df['fbs'] = np.where(df['fbs'] == True, 1, 0)
     df['exang'] = np.where(df['exang'] == True, 1, 0)
-    
+    hd = df['num'] > 0
+    df.loc[hd, 'num'] = 1
     X = df[FEATURES]
     y = df[TARGET_COLUMN]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)

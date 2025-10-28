@@ -34,7 +34,7 @@ def save_model(model, filename):
 if __name__ == '__main__':
     full_file_path = os.path.join(path_to_dataset, filename)
     df = load_data(full_file_path)
-    X_train, X_test, y_train, y_test, preprocessor = get_processed_data(df)
+    X_train, _, y_train, _, preprocessor = get_processed_data(df)
     trained_model = train_model(X_train, y_train, preprocessor)
     full_file_path = os.path.join(path_to_model, MODEL_FILE)
     save_model(trained_model, full_file_path)
