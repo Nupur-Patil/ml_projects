@@ -20,6 +20,7 @@ The project follows a structured data science approach, leveraging scikit-learn 
 * **Logistic Regression**
 * **Decision Tree Classifier**
 * **Random Forest Classifier (RF)**
+* **Gradient Boosting**
 * **eXtreme Gradient Boosting (XGB)**
 * **Support Vector Machine (SVM)**
 
@@ -37,7 +38,6 @@ Model performance is rigorously evaluated using a comprehensive set of metrics e
 * **Classification Report:** Precision, Recall, F1-Score, and Support.
 * **Confusion Matrix:** Visualization of true and false positives/negatives.
 * **Receiver Operating Characteristic (ROC) Curve & Area Under the Curve (ROC-AUC):** Primary metric for model discrimination power.
-* **Precision-Recall Curve:** Essential for evaluating performance on potentially imbalanced datasets.
 
 ### 3.3. Model Interpretability and Explainability
 
@@ -53,12 +53,14 @@ Model performance is rigorously evaluated using a comprehensive set of metrics e
 |   |-- processed/              # Cleaned, preprocessed data for modeling
 |-- notebooks/
 |   |-- 01_eda_and_cleaning.ipynb # Initial exploration and preprocessing steps
-|   |-- 02_model_training_and_tuning.ipynb # Model comparison, tuning, and evaluation
+|   |-- 02_model_training.ipynb # Model comparison, tuning, and evaluation
 |-- src/
-|   |-- pipeline.py             # Defines the data processing and model pipelines
-|   |-- models.py               # Contains model definitions and training logic
-|   |-- utils.py                # Helper functions (e.g., plotting metrics)
-|-- artifacts/                  # Stores trained models and hyperparameter search results
+|   |-- data_cleaning.py        # Cleans raw data and saves processed data df
+|   |-- eda_plot.py             # Creates and saves plots of the input data distributions
+|   |-- model_training.py       # Trains the optimal classifier model 
+|   |-- evaluator.py            # Evaluates model performance of the optimal model and prints confusion matrix 
+|-- models/                     # Saves trained model object (.joblib file)
+|-- results/                    # Saves the EDA plots
 |-- requirements.txt            # Project dependencies
 `-- README.md                   # Project overview and documentation (This file)
 ```
