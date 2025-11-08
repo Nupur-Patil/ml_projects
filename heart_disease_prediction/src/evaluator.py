@@ -12,7 +12,7 @@ filename = 'heart_disease_uci.csv'
 path_to_model = r'C:\\Users\\patil\\Documents\\GitHub\\ml_projects\\heart_disease_prediction\\models'
 MODEL_FILE = 'rf_classifier.joblib'
 path_to_matrix = r'C:\\Users\\patil\\Documents\\GitHub\\ml_projects\\heart_disease_prediction\\results'
-THRESHOLD = 0.579
+THRESHOLD = 0.529
 
 def load_model(filename):
     """ Loads the trained pipeline from saved file."""
@@ -22,13 +22,14 @@ def load_model(filename):
     except:
         print('Error in loading model.')
         
-def calculate_metrics(y_true, y_pred):
+def calculate_metrics(y_true, y_pred, y_proba):
     """ calculates accuracy, sensitivity, specificity, precision, F1-score and ROC AUC"""
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
     
     specificity = tn / (tn + fp)
-    fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+    fpr, tpr, thresholds = roc_curve(y_test, y_proba)
     roc_auc = auc(fpr, tpr)
+    
     
 #     curve = pd.DataFrame(data = {'fpr': fpr,'tpr':tpr, 'threshold':thresholds})
 #     curve['dist_to_optimal'] = np.sqrt((curve['fpr'] - 0)**2 + (curve['tpr'] - 1)**2)
@@ -56,7 +57,7 @@ def plot_confusion_matrix(y_true, y_pred):
     )
     disp.ax_.set_title('Confusion Matrix for Random Forest')
     plt.title(f'Confusion Matrix (Threshold={THRESHOLD})')
-    plt.savefig(os.path.join(path_to_matrix, 'confusion_matrix.png'))
+    plt.savefig(os.path.join(path_to_matrix, 'confusion_matrix_rf.png'))
     plt.show()
     print("Confusion matrix saved as confusion_matrix.png")
     
@@ -75,7 +76,7 @@ if __name__ == '__main__':
         
         y_pred_thresholded = (y_proba >= THRESHOLD).astype(int)
         
-        metrics = calculate_metrics(y_test, y_pred_thresholded)
+        metrics = calculate_metrics(y_test, y_pred_thresholded, y_proba)
         
         print("\n--- Model Evaluation ---")
         for name, value in metrics.items():
