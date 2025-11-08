@@ -1,0 +1,22 @@
+0 age q
+1 sex q
+2 trestbps q
+3 chol q
+4 fbs q
+5 thalch q
+6 exang q
+7 oldpeak q
+8 ca q
+9 cp_asymptomatic q
+10 cp_atypical angina q
+11 cp_non-anginal q
+12 cp_typical angina q
+13 restecg_lv hypertrophy q
+14 restecg_normal q
+15 restecg_st-t abnormality q
+16 slope_downsloping q
+17 slope_flat q
+18 slope_upsloping q
+19 thal_fixed defect q
+20 thal_normal q
+21 thal_reversable defect q

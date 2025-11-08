@@ -86,15 +86,21 @@ Model performance is rigorously evaluated using a comprehensive set of metrics e
     ```
 
 ### 5.3. Running the Project
+The machine learning workflow is modularized into three Python scripts. Ensure you are in the root directory of the heart_disease_prediction project to execute the scripts sequentially.
 
-1.  **EDA and Preprocessing:** Run the Jupyter notebooks in the `notebooks/` directory sequentially.
+1.  **EDA and Preprocessing:** Review and run the Jupyter notebooks in the `notebooks/` directory for initial data inspection, preparation, visualization and exploring different models to classify.
     ```bash
     jupyter notebook
     ```
-2.  **Model Training:** Execute the main training script (if created in `src`):
+2.  **Model Training and Saving:** This script executes the entire pipeline: loads the data, uses the preprocessing defined in `data_cleaning.py`, trains the Random Forest model, and saves the final fitted pipeline to a file `rf_classifier.joblib`
     ```bash
-    python src/train_pipeline.py
+    python src/model_training.py
     ```
+3.  **Model Evaluation and Visualization:** This script loads the saved model and the test data to calculate all final performance metrics (Accuracy, F1-Score, Sensitivity, Specificity) and generates the Confusion Matrix plot.
+    ```bash
+    python src/evaluator.py
+    ```
+
 
 ## 6. Results and Conclusions
 
