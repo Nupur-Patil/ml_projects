@@ -15,6 +15,6 @@ Each subdirectory contains a standalone project, complete with its own detailed 
 🚀 Projects
 | Project Name             | Dataset           | Task                  | Model(s)                        | Status    |
 |--------------------------|-------------------|-----------------------|---------------------------------|-----------|
-| Heart Disease Prediction | UCI ML Repository | Binary Classification | Logistic Regression, SVM, RF,XGB|Ongoing    |
+| Heart Disease Prediction | UCI ML Repository | Binary Classification | Logistic Regression, SVM, RF,XGB|Completed    |
 | [Project 2 Name]         | [Source]          | [Task]                | [Model(s)]                      | [Status]  |
 |                          |                   |                       |                                 |           |
