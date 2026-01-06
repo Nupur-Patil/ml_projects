@@ -13,8 +13,8 @@ Model Evaluation and Reporting
 Each subdirectory contains a standalone project, complete with its own detailed README.md, environment dependencies, and clear script-based workflow.
 
 🚀 Projects
-| Project Name             | Dataset           | Task                  | Model(s)                        | Status    |
-|--------------------------|-------------------|-----------------------|---------------------------------|-----------|
-| Heart Disease Prediction | UCI ML Repository | Binary Classification | Logistic Regression, SVM, RF,XGB|Completed    |
-| [Project 2 Name]         | [Source]          | [Task]                | [Model(s)]                      | [Status]  |
-|                          |                   |                       |                                 |           |
+| Project Name                | Dataset           | Task                  | Model(s)                        | Status    |
+|-----------------------------|-------------------|-----------------------|---------------------------------|-----------|
+| Heart Disease Prediction    | UCI ML Repository | Binary Classification | Logistic Regression, SVM, RF,XGB|Completed  |
+| CreditCard Fraud Prediction | Kaggle dataset    | Binary Classification | [Model(s)]                      | Ongoing   |
+|                             |                   |                       |                                 |           |
